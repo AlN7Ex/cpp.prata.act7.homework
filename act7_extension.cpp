@@ -59,8 +59,8 @@ unsigned long long factorial(int n)
 
 constexpr size_t ArrSize = 10;
 
-int fillArray(double * arr, const size_t ArrSize);
-void reverseArray(double * beginArr, double * endArr, const size_t currentSize);
+size_t fillArray(double * arr, const size_t ArrSize);
+void reverseArray(double * beginArr, double * endArr);
 void showArray(const double * arr, size_t currentSize);
 
 int main()
@@ -72,7 +72,7 @@ int main()
 	std::cout << "Source array:" << std::endl;
 	showArray(myArr, currentSize);
 	std::cout << "Reversing ..." << std::endl;
-	reverseArray(myArr + 1, myArr + currentSize - 1, currentSize);
+	reverseArray(myArr + 1, myArr + currentSize - 2);
 	Sleep(3000);
 	std::cout << "Reversed array:" << std::endl;
 	showArray(myArr, currentSize);
@@ -80,26 +80,25 @@ int main()
 	return 0;
 }
 
-int fillArray(double * arr, const size_t ArrSize)
+size_t fillArray(double * arr, const size_t ArrSize)
 {
-	double number;
-	int actualSize = 1;
-	std::cin >> number;
-
-	while(number && actualSize != ArrSize)
+	size_t actualSize = 0;
+	do
 	{
-		*arr = number;
+		std::cin >> *arr;
+		if (std::cin.fail())
+			break;
 		++arr;
 		++actualSize;
-		std::cin >> number;
 	}
+	while (actualSize < ArrSize);
 
 	return actualSize;
 }
 
-void reverseArray(double * beginArr, double * endArr, const size_t currentSize)
+void reverseArray(double * beginArr, double * endArr)
 {
-	while (*beginArr != *endArr)
+	while (beginArr < endArr)
 	{
 		double temp;
 		temp = *beginArr;
